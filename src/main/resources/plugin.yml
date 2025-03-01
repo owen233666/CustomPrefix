@@ -1,0 +1,8 @@
+name: CustomPrefix
+version: '0.0.1'
+main: cn.owen233666.customPrefix.CustomPrefix
+api-version: '1.21'
+prefix: EpicPits
+load: STARTUP
+authors: [ owen233666 ]
+description: example
