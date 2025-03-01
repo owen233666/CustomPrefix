@@ -1,21 +1,19 @@
 package cn.owen233666.customPrefix.prefixdisplay;
 
-public class FormatCodeProcessor {
+public class FormatCodeTranslation {
 
     public static String ProcessFormatCode(String s) {
         return insertClosingTag(s);
     }
 
-    /**
-     * 在指定的格式代码后插入关闭标签
-     *
-     * @param input       输入字符串
-     * @param closingTag  要插入的关闭标签（例如 </b>）
-     * @return 处理后的字符串
-     */
-    public static String insertClosingTag(String input) {
-        /** 定义需要处理的格式代码
-         *
+    private static String insertClosingTag(String input) {
+        /**
+         *  定义需要处理的格式代码
+         *  &l为粗体
+         *  &k为混乱字符
+         *  &m为删除线
+         *  &n为下划线
+         *  &o为斜体
          */
         String[] formatCodes = {"&l", "&k", "&m", "&o", "&n"};
         // 遍历每个格式代码
@@ -52,7 +50,6 @@ public class FormatCodeProcessor {
                 }
             }
         }
-
         return input;
     }
 }

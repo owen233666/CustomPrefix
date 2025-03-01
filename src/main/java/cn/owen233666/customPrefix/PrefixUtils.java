@@ -1,62 +1,63 @@
 package cn.owen233666.customPrefix;
 
 import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
-import net.luckperms.api.node.Node;
+import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.PrefixNode;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.RegisteredServiceProvider;
 
-import java.util.Collection;
+public class PrefixUtils {
 
-public class PrefixUploader {
-
-    public static void upload(Player player, String prefix) {
-        // 获取 LuckPerms 服务
-        RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
-        if (provider == null) {
-            // 如果 LuckPerms 未找到，直接返回
-            return;
-        }
-
-        LuckPerms luckPerms = provider.getProvider();
-
-        // 调用设置前缀的方法
-        setPrefix(player, luckPerms, prefix);
+    private static LuckPerms getLuckPerms() {
+        return LuckPermsProvider.get();
     }
 
-    private static void setPrefix(Player player, LuckPerms luckPerms, String prefix) {
-        // 获取玩家对应的 User 对象
+    public static void setPrefix(Player player, String prefix) {
+        LuckPerms luckPerms = getLuckPerms();
         User user = luckPerms.getUserManager().getUser(player.getUniqueId());
-        if (user == null) {
-            // 如果用户不存在，可能是数据未加载
-            return;
+
+        if (user != null) {
+            // 移除所有现有的前缀
+            user.data().clear(NodeType.PREFIX::matches);
+
+            // 创建一个优先级为100的前缀节点
+            PrefixNode prefixNode = PrefixNode.builder(prefix, 100).build();
+
+            // 将前缀节点添加到用户
+            user.data().add(prefixNode);
+
+            // 保存更改
+            luckPerms.getUserManager().saveUser(user);
         }
-
-        // 获取用户的所有节点
-        Collection<Node> nodes = user.data().toCollection();
-
-        // 移除所有优先级为100的前缀节点
-        for (Node node : nodes) {
-            if (node instanceof PrefixNode) {
-                PrefixNode prefixNode = (PrefixNode) node;
-                if (prefixNode.getPriority() == 100) {
-                    user.data().remove(prefixNode);
-                }
-            }
-        }
-
-        // 创建一个新的前缀节点
-        Node prefixNode = PrefixNode.builder(prefix, 100).build();
-
-        // 将前缀节点添加到用户的数据中
-        user.data().add(prefixNode);
-
-        // 保存更改
-        luckPerms.getUserManager().saveUser(user);
-
-        // 通知 LuckPerms 更新玩家的权限
-        luckPerms.getUserManager().loadUser(user.getUniqueId());
     }
+
+    public static void removePrefix(Player player) {
+        LuckPerms luckPerms = getLuckPerms();
+        User user = luckPerms.getUserManager().getUser(player.getUniqueId());
+
+        if (user != null) {
+            // 移除所有优先级为100的前缀节点
+            user.data().clear(node -> {
+                if (node instanceof PrefixNode) {
+                    PrefixNode prefixNode = (PrefixNode) node;
+                    return prefixNode.getPriority() == 100; // 只移除优先级为100的前缀
+                }
+                return false;
+            });
+
+            // 保存更改
+            luckPerms.getUserManager().saveUser(user);
+        }
+    }
+
+    //获取玩家当前prefix
+    public String getPrefix(Player player) {
+
+        LuckPerms luckPerms = getLuckPerms();
+        User user = luckPerms.getUserManager().getUser(player.getUniqueId());
+        // 查找前缀节点
+        return user.getCachedData().getMetaData().getPrefix();
+    }
+
 }
