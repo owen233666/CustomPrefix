@@ -40,7 +40,8 @@ public class Commands implements TabExecutor {
                                     "1.可以使用原版颜色代码,例如\"<green>&a</green>\"\n" +
                                     "2.可以使用原版格式代码,例如\"<italic>&o</italic>\"\n" +
                                     "3.可以使用6位16进制颜色代码,例如\"<#ABCDEF>&#ABCDEF</#ABCDEF>\"\n" +
-                                    "4.这是一个例子,假如执行<#FFE521>/prefix upload &#ABCDEF&l&o这是一个测试称号</#FFE521>,那么它看起来应该长这样：\n<#FFFFFF>[</#FFFFFF><#ABCDEF><bold><italic>这是一个测试称号</#ABCDEF><#FFFFFF>]</#FFFFFF>");
+                                    "4.可以使用渐变色代码，例如\"<g:#ABCDEF:#ABCDEF>\"\n" +
+                                    "5.这是一个例子,假如执行<#FFE521>/prefix upload &#ABCDEF&l&o这是一个测试称号</#FFE521>,那么它看起来应该长这样：\n<#FFFFFF>[</#FFFFFF><#ABCDEF><bold><italic>这是一个测试称号</#ABCDEF><#FFFFFF>]</#FFFFFF>");
                     sender.sendMessage(component);
                 }
                 // 清除称号
