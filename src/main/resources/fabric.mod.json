@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "customprefix",
+	"version": "${version}",
+	"name": "CustomPrefix",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/customprefix/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.owen233666.CustomPrefix"
+		],
+		"client": [
+			"com.owen233666.CustomPrefixClient"
+		],
+		"fabric-datagen": [
+			"com.owen233666.CustomPrefixDataGenerator"
+		]
+	},
+	"mixins": [
+		"customprefix.mixins.json",
+		{
+			"config": "customprefix.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.21.7",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
