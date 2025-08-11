@@ -15,11 +15,16 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven {
+        url 'https://jitpack.io'
+    }
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
     compileOnly 'net.luckperms:api:5.4'
+    compileOnly 'com.github.YiC200333:XConomyAPI:2.25.1'
+    compileOnly 'net.dmulloy2:ProtocolLib:5.4.0'
 }
 
 def targetJavaVersion = 21

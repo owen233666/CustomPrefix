@@ -1,30 +1,42 @@
 package cn.owen233666.customPrefix;
 
-import cn.owen233666.customPrefix.Commands.Commands;
+import cn.owen233666.customPrefix.commands.customprefixCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CustomPrefix extends JavaPlugin {
 
+    public static final String NAMESPACE = "customprefix";
+
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        // 1. 先检测LuckPerms，再初始化其他逻辑
         Plugin luckperms = Bukkit.getPluginManager().getPlugin("LuckPerms");
-        if (luckperms != null && luckperms.isEnabled()) {
-            getLogger().info("已检测到 LuckPerms，版本: " + luckperms.getDescription().getVersion()); //输出lpversion
-        } else {
+        if (luckperms == null || !luckperms.isEnabled()) {
             getLogger().warning("未找到 LuckPerms！插件无法加载。");
-            // 处理没有 LuckPerms 的情况
             Bukkit.getPluginManager().disablePlugin(this);
             return;
+        }else{
+            getLogger().info("Luckperms已找到！");
         }
-        this.getCommand("customprefix").setExecutor(new Commands());
-        this.getCommand("customprefixadmin").setExecutor(new Commands());
+
+        // 2. 创建唯一的命令实例
+        customprefixCommand command = new customprefixCommand();
+
+        // 3. 注册事件和命令
+        getServer().getPluginManager().registerEvents(command, this);
+        if (getCommand("customprefix") != null) {
+            getCommand("customprefix").setExecutor(command);
+        }
+        if (getCommand("customprefixadmin") != null) {
+            getCommand("customprefixadmin").setExecutor(command);
+        }
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        getLogger().info("插件已卸载");
     }
 }
