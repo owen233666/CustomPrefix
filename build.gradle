@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
 group = 'cn.owen233666'
@@ -25,6 +26,15 @@ dependencies {
     compileOnly 'net.luckperms:api:5.4'
     compileOnly 'com.github.YiC200333:XConomyAPI:2.25.1'
     compileOnly 'net.dmulloy2:ProtocolLib:5.4.0'
+}
+
+tasks {
+    runServer {
+        // Configure the Minecraft version for our task.
+        // This is the only required configuration besides applying the plugin.
+        // Your plugin's jar (or shadowJar if present) will be used automatically.
+        minecraftVersion("1.21.8")
+    }
 }
 
 def targetJavaVersion = 21
