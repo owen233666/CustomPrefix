@@ -52,7 +52,7 @@ public class PrefixUtils {
     }
 
     //获取玩家当前prefix
-    public String getPrefix(Player player) {
+    public static String getPrefix(Player player) {
 
         LuckPerms luckPerms = getLuckPerms();
         User user = luckPerms.getUserManager().getUser(player.getUniqueId());

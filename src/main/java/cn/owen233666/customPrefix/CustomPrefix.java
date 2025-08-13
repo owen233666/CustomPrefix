@@ -1,6 +1,7 @@
 package cn.owen233666.customPrefix;
 
-import cn.owen233666.customPrefix.commands.customprefixCommand;
+import cn.owen233666.customPrefix.commands.CustomPrefixCommand;
+import cn.owen233666.customPrefix.commands.customprefixCommand_old;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,7 +23,7 @@ public final class CustomPrefix extends JavaPlugin {
         }
 
         // 2. 创建唯一的命令实例
-        customprefixCommand command = new customprefixCommand();
+        CustomPrefixCommand command = new CustomPrefixCommand();
 
         // 3. 注册事件和命令
         getServer().getPluginManager().registerEvents(command, this);
